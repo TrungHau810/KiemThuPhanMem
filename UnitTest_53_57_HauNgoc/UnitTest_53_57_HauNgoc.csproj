@@ -55,6 +55,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Data_53_57_HauNgoc\DataDriver_53_57_HauNgoc.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Data_53_57_HauNgoc\DataTest_53_57_HauNgoc.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

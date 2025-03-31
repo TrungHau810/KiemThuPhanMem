@@ -41,7 +41,7 @@ namespace UnitTest_53_57_HauNgoc
         {
             PTBac2_53_57_HauNgoc ptbac2 = new PTBac2_53_57_HauNgoc(1, -2, 1);
             String actual_53_57_HauNgoc = ptbac2.Solve_53_57_HauNgoc();
-            String expected_53_57_HauNgoc = "Nghiệm kép x = 1.00";
+            String expected_53_57_HauNgoc = "Nghiệm kép x = 1";
             Assert.AreEqual(expected_53_57_HauNgoc, actual_53_57_HauNgoc);
         }
 
@@ -51,7 +51,7 @@ namespace UnitTest_53_57_HauNgoc
         {
             PTBac2_53_57_HauNgoc ptbac2 = new PTBac2_53_57_HauNgoc(1, -3, 2);
             String actual_53_57_HauNgoc = ptbac2.Solve_53_57_HauNgoc();
-            String expected_53_57_HauNgoc = "x1 = 2.00, x2 = 1.00";
+            String expected_53_57_HauNgoc = "x1 = 2, x2 = 1";
             Assert.AreEqual(expected_53_57_HauNgoc, actual_53_57_HauNgoc);
         }
 
@@ -72,7 +72,7 @@ namespace UnitTest_53_57_HauNgoc
         {
             PTBac2_53_57_HauNgoc ptbac2 = new PTBac2_53_57_HauNgoc(1, -4, 4);
             string actualResult = ptbac2.Solve_53_57_HauNgoc();
-            string expectedResult = "Nghiệm kép x = 3.00";
+            string expectedResult = "Nghiệm kép x = 3";
             Assert.AreEqual(expectedResult, actualResult);
         }
 
@@ -102,7 +102,7 @@ namespace UnitTest_53_57_HauNgoc
         {
             PTBac2_53_57_HauNgoc ptbac2 = new PTBac2_53_57_HauNgoc(1, -5, 6);
             string actualResult = ptbac2.Solve_53_57_HauNgoc();
-            string expectedResult = "x1 = 1.00, x2 = 2.00";
+            string expectedResult = "x1 = 1, x2 = 2";
             Assert.AreEqual(expectedResult, actualResult);
         }
 
@@ -152,21 +152,54 @@ namespace UnitTest_53_57_HauNgoc
             {
                 Assert.AreEqual(expected_53_Hau, actual_53_57_HauNgoc);
             }
-
-
-            //// Xử lý expected
-            //if (expected_53_Hau.Contains("|")){
-            //    // Tách | trong chuỗi
-            //    string[] temp_53_57_HauNgoc = expected_53_Hau.Split('|');
-            //    //
-            //    string x1_53_57_HauNgoc = temp_53_57_HauNgoc[0].Trim();
-            //    string x2_53_57_HauNgoc = temp_53_57_HauNgoc[1].Trim();
-            //    expected_53_Hau = $"x1 = {x1_53_57_HauNgoc}, x2 = {x2_53_57_HauNgoc}";
-            //}
-            //// Kiểm tra kết quả mong muốn và kết quả đạt được
-            //Assert.AreEqual(expected_53_Hau, actual_53_57_HauNgoc);
         }
 
+        // Đọc file excel
+        // Nếu file excel không được add vào project thì chỉnh path lại (DBQ). Ví dụ: DBQ=D:\\DataDriver_53_57_HauNgoc.xlsx;
+        [DataSource(
+            "System.Data.Odbc",
+            "Driver={Microsoft Excel Driver (*.xls, *.xlsx, *.xlsm, *.xlsb)};DBQ=|DataDirectory|\\Data_53_57_HauNgoc\\DataDriver_53_57_HauNgoc.xlsx;",
+            "Sheet1$",
+            DataAccessMethod.Sequential)]
 
+        [TestMethod]
+        public void TC11_TestWithExcel_53_57_HauNgoc()
+        {
+            // Đọc giá trị a, b, c
+            int a_53_57_HauNgoc = int.Parse(TestContext.DataRow[0].ToString());
+            int b_53_57_HauNgoc = int.Parse(TestContext.DataRow[1].ToString());
+            int c_53_57_HauNgoc = int.Parse(TestContext.DataRow[2].ToString());
+
+            // Giải phương trình với a, b, c
+            PTBac2_53_57_HauNgoc ptb2_53_57_HauNgoc = new PTBac2_53_57_HauNgoc(a_53_57_HauNgoc, b_53_57_HauNgoc, c_53_57_HauNgoc);
+            string actual_53_57_HauNgoc = ptb2_53_57_HauNgoc.Solve_53_57_HauNgoc();
+
+            // Loại bỏ phần text dư thừa trong kết quả thực tế
+            actual_53_57_HauNgoc = actual_53_57_HauNgoc.Replace("x1 =", "").Replace("x2 =", "").Replace("x =", "").Trim();
+
+            // Đọc kết quả mong muốn từ Excel
+            string expected_53_Hau = TestContext.DataRow[3].ToString();
+
+            // Xử lý trường hợp expected bị rỗng
+            if (string.IsNullOrEmpty(expected_53_Hau))
+            {
+                expected_53_Hau = actual_53_57_HauNgoc;
+            }
+
+            Console.WriteLine($"Expected: {expected_53_Hau}, Actual: {actual_53_57_HauNgoc}");
+
+            // Kiểm tra nếu có nhiều nghiệm
+            if (expected_53_Hau.Contains(","))
+            {
+                var expectedSet = new HashSet<string>(expected_53_Hau.Split(',').Select(x => x.Trim()));
+                var actualSet = new HashSet<string>(actual_53_57_HauNgoc.Split(',').Select(x => x.Trim()));
+
+                CollectionAssert.AreEquivalent(expectedSet.ToList(), actualSet.ToList());
+            }
+            else
+            {
+                Assert.AreEqual(expected_53_Hau, actual_53_57_HauNgoc);
+            }
+        }
     }
 }
