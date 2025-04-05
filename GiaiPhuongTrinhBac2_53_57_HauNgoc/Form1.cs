@@ -28,5 +28,10 @@ namespace GiaiPhuongTrinhBac2_53_57_HauNgoc
             Console.WriteLine(ptbac2_53_57_HauNgoc.Solve_53_57_HauNgoc());
 
         }
+
+        private void bntClose_53_57_HauNgoc_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
