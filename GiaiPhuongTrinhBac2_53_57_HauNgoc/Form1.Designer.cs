@@ -51,6 +51,7 @@
             this.bntClose_53_57_HauNgoc.TabIndex = 16;
             this.bntClose_53_57_HauNgoc.Text = "Đóng";
             this.bntClose_53_57_HauNgoc.UseVisualStyleBackColor = true;
+            this.bntClose_53_57_HauNgoc.Click += new System.EventHandler(this.bntClose_53_57_HauNgoc_Click);
             // 
             // bntPlay_53_57_HauNgoc
             // 

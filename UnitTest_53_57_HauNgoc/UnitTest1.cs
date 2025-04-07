@@ -13,10 +13,43 @@ namespace UnitTest_53_57_HauNgoc
         public TestContext TestContext { get; set; }
 
 
-        // Các test case pass
-        // TC1: Phương trình vô nghiệm
+        // Các test case PASS
+        // Trở thành PT bậc nhất: a khác 0
+        //TC1: a = 0, b khác 0
         [TestMethod]
-        public void TC1_PTVoNghiem_53_57_HauNgoc_Pass()
+        public void TC1_PTBacNhat_53_57_HauNgoc_Pass()
+        {
+            PTBac2_53_57_HauNgoc ptbac2 = new PTBac2_53_57_HauNgoc(0, 2, -4);
+            String actualResult = ptbac2.Solve_53_57_HauNgoc();
+            string expectedResult = "x = 2";
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        //TC2: Bậc nhất vô nghiệm
+        [TestMethod]
+        public void TC2_PTBacNhatVN_53_57_HauNgoc_Pass()
+        {
+            PTBac2_53_57_HauNgoc ptbac2 = new PTBac2_53_57_HauNgoc(0, 0, 5);
+            String actualResult = ptbac2.Solve_53_57_HauNgoc();
+            String expectedResult = "Phương trình vô nghiệm";
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        //TC3: Bậc nhất vô số nghiệm
+        [TestMethod]
+        public void TC3_PTBacNhatVSN_53_57_HauNgoc_Pass()
+        {
+            PTBac2_53_57_HauNgoc ptbac2 = new PTBac2_53_57_HauNgoc(0, 0, 0);
+            String actualResult = ptbac2.Solve_53_57_HauNgoc();
+            String expectedResult = "Phương trình có vô số nghiệm";
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+
+        //Phương trình bậc 2: a khác 0
+        // TC4: Phương trình vô nghiệm, delta < 0
+        [TestMethod]
+        public void TC4_PTB2VoNghiem_53_57_HauNgoc_Pass()
         {
             PTBac2_53_57_HauNgoc ptbac2 = new PTBac2_53_57_HauNgoc(6, 1, 2);
             String actual_53_57_HauNgoc = ptbac2.Solve_53_57_HauNgoc();
@@ -25,19 +58,9 @@ namespace UnitTest_53_57_HauNgoc
             Assert.AreEqual(expected_53_57_HauNgoc, actual_53_57_HauNgoc);
         }
 
-        // TC2: Phương trình vô số nghiệm
+        // TC5: Phương trình có nghiệm kép, delta = 0
         [TestMethod]
-        public void TC2_PTVoSoNghiem_53_57_HauNgoc_Pass()
-        {
-            PTBac2_53_57_HauNgoc ptbac2 = new PTBac2_53_57_HauNgoc(0, 0, 0);
-            String actual_53_57_HauNgoc = ptbac2.Solve_53_57_HauNgoc();
-            String expected_53_57_HauNgoc = "Phương trình có vô số nghiệm";
-            Assert.AreEqual(expected_53_57_HauNgoc, actual_53_57_HauNgoc);
-        }
-
-        // TC3: Phương trình có nghiệm kép
-        [TestMethod]
-        public void TC3_NghiemKep_53_57_HauNgoc_Pass()
+        public void TC5_PTB2NghiemKep_53_57_HauNgoc_Pass()
         {
             PTBac2_53_57_HauNgoc ptbac2 = new PTBac2_53_57_HauNgoc(1, -2, 1);
             String actual_53_57_HauNgoc = ptbac2.Solve_53_57_HauNgoc();
@@ -45,9 +68,9 @@ namespace UnitTest_53_57_HauNgoc
             Assert.AreEqual(expected_53_57_HauNgoc, actual_53_57_HauNgoc);
         }
 
-        // TC4: Phương trình có 2 nghiệm phân biệt
+        // TC6: Phương trình có 2 nghiệm phân biệt, delta > 0
         [TestMethod]
-        public void TC4_2NghiemPB_53_57_HauNgoc_Pass()
+        public void TC6_PTB22NghiemPB_53_57_HauNgoc_Pass()
         {
             PTBac2_53_57_HauNgoc ptbac2 = new PTBac2_53_57_HauNgoc(1, -3, 2);
             String actual_53_57_HauNgoc = ptbac2.Solve_53_57_HauNgoc();
@@ -55,10 +78,21 @@ namespace UnitTest_53_57_HauNgoc
             Assert.AreEqual(expected_53_57_HauNgoc, actual_53_57_HauNgoc);
         }
 
-        // Các test case fail
-        // TC5: Phương trình có 2 nghiệm phân biệt -> Fail
+        //TC7: Hệ số a, b, c có giá trị âm
         [TestMethod]
-        public void TC5_2NghiemPB_53_57_HauNgoc_Fail()
+        public void TC7_Heso_Am_53_57_HauNgoc_Pass()
+        {
+            PTBac2_53_57_HauNgoc ptbac2 = new PTBac2_53_57_HauNgoc(-1, -2, -1);
+            String actualResult = ptbac2.Solve_53_57_HauNgoc();
+            String expectedResult = "Nghiệm kép x = -1";
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+        //=======================================================================
+        /// </summary>
+        // Các test case FAIL
+        // TC8: Phương trình có 2 nghiệm phân biệt -> Fail
+        [TestMethod]
+        public void TC8_2NghiemPB_53_57_HauNgoc_Fail()
         {
             PTBac2_53_57_HauNgoc ptbac2 = new PTBac2_53_57_HauNgoc(4, -2, 5);
             String actual_53_57_HauNgoc = ptbac2.Solve_53_57_HauNgoc();
@@ -66,9 +100,9 @@ namespace UnitTest_53_57_HauNgoc
             Assert.AreEqual(expected_53_57_HauNgoc, actual_53_57_HauNgoc);
         }
 
-        // TC6:Phương trình có ngiệm kép -> Fail
+        // TC9:Phương trình có ngiệm kép -> Fail
         [TestMethod]
-        public void TC6_NghiemKep_53_57_HauNgoc_Fail()
+        public void TC9_NghiemKep_53_57_HauNgoc_Fail()
         {
             PTBac2_53_57_HauNgoc ptbac2 = new PTBac2_53_57_HauNgoc(1, -4, 4);
             string actualResult = ptbac2.Solve_53_57_HauNgoc();
@@ -76,9 +110,9 @@ namespace UnitTest_53_57_HauNgoc
             Assert.AreEqual(expectedResult, actualResult);
         }
 
-        // TC7: Phương trình vô nghiệm -> Fail
+        // TC10: Phương trình vô nghiệm -> Fail
         [TestMethod]
-        public void TC7_PTVoNghiem_53_57_HauNgoc_Fail()
+        public void TC10_PTVoNghiem_53_57_HauNgoc_Fail()
         {
             PTBac2_53_57_HauNgoc ptbac2 = new PTBac2_53_57_HauNgoc(1, 2, 1);
             string actualResult = ptbac2.Solve_53_57_HauNgoc();
@@ -86,19 +120,19 @@ namespace UnitTest_53_57_HauNgoc
             Assert.AreEqual(expectedResult, actualResult);
         }
 
-        // TC8: Phương trình có vô số nghiệm -> Fail
+        // TC11: Phương trình có vô số nghiệm -> Fail
         [TestMethod]
-        public void TC8_PTVoSoNghiem_53_57_HauNgoc_Fail()
+        public void TC11_PTVoSoNghiem_53_57_HauNgoc_Fail()
         {
             PTBac2_53_57_HauNgoc ptbac2 = new PTBac2_53_57_HauNgoc(0, 0, 0);
             string actualResult = ptbac2.Solve_53_57_HauNgoc();
-            string expectedResult = "Phương trình có một nghiệm duy nhất";
+            string expectedResult = "Phương trình vô nghiệm";
             Assert.AreEqual(expectedResult, actualResult);
         }
 
-        // TC9: Phương trình có 2 nghiệm phân biệt -> Fail
+        // TC12: Phương trình có 2 nghiệm phân biệt -> Fail
         [TestMethod]
-        public void TC9_2NghiemPB_53_57_HauNgoc_Fail()
+        public void TC12_2NghiemPB_53_57_HauNgoc_Fail()
         {
             PTBac2_53_57_HauNgoc ptbac2 = new PTBac2_53_57_HauNgoc(1, -5, 6);
             string actualResult = ptbac2.Solve_53_57_HauNgoc();
@@ -106,6 +140,8 @@ namespace UnitTest_53_57_HauNgoc
             Assert.AreEqual(expectedResult, actualResult);
         }
 
+        //==================================================================
+        
         // Data drive: Đọc file CSV
         // Đọc file CSV
         [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV",
@@ -113,7 +149,7 @@ namespace UnitTest_53_57_HauNgoc
             DataAccessMethod.Sequential)]
 
         [TestMethod]
-        public void TC10_53_57_HauNgoc_TestWithDataSource()
+        public void TC13_53_57_HauNgoc_TestWithDataSource()
         {
             // Đọc giá trị a, b, c từ CSV
             int a_53_57_HauNgoc = int.Parse(TestContext.DataRow[0].ToString());
@@ -163,7 +199,7 @@ namespace UnitTest_53_57_HauNgoc
             DataAccessMethod.Sequential)]
 
         [TestMethod]
-        public void TC11_TestWithExcel_53_57_HauNgoc()
+        public void TC14_TestWithExcel_53_57_HauNgoc()
         {
             // Đọc giá trị a, b, c
             int a_53_57_HauNgoc = int.Parse(TestContext.DataRow[0].ToString());
@@ -200,6 +236,13 @@ namespace UnitTest_53_57_HauNgoc
             {
                 Assert.AreEqual(expected_53_Hau, actual_53_57_HauNgoc);
             }
+        }
+        //=============================================================================
+        // Kiểm thử ngoại lệ
+        [TestMethod]
+        public void TC15_NhapKyTuKhongHopLe_53_57_HauNgoc()
+        {
+            Assert.ThrowsException<FormatException>(() => new PTBac2_53_57_HauNgoc(Convert.ToDouble("a"), 2, 3));
         }
     }
 }
